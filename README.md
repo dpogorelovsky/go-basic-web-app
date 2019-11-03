@@ -1,7 +1,7 @@
 # go-basic-web-app
 This is going to be web application that can be used as skeleton.
 
-@todo
+# @todo
 - configuration
 - routing
 - handlers/controllers
@@ -9,7 +9,7 @@ This is going to be web application that can be used as skeleton.
  - several example tables
  - migrations
 - cache layer
-@maybe todo
+# @maybe todo
 - authorization/authentication
 - tests
 - roles/access
