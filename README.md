@@ -1,15 +1,18 @@
 # go-basic-web-app
 This is going to be web application that can be used as skeleton.
 
-# @todo
-- configuration
-- routing
+## How to run
+Close the repo somewhere outside `GOPATH` and run:
+- `make install`
+- `make run`
+
+## @todo
 - handlers/controllers
 - DB
  - several example tables
  - migrations
 - cache layer
-# @maybe todo
+## @maybe todo
 - authorization/authentication
 - tests
 - roles/access
