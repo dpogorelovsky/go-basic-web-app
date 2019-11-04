@@ -7,7 +7,6 @@ Close the repo somewhere outside `GOPATH` and run:
 - `make run`
 
 ## @todo
-- handlers/controllers
 - DB
  - several example tables
  - migrations
