@@ -1,33 +1,31 @@
 package handlers
 
 import (
+	"log"
 	"net/http"
 
-	"github.com/dpogorelovsky/go-basic-web-app/app/models"
+	"github.com/dpogorelovsky/go-basic-web-app/app/storage/astorage"
 	R "github.com/dpogorelovsky/go-basic-web-app/app/utils/responder"
 )
 
 // User - users handler/controller
-type User struct{}
+type User struct {
+	s astorage.UserStorage
+}
 
 // List - returning list of users
 func (h *User) List(w http.ResponseWriter, r *http.Request) {
 
-	resp := []models.User{
-		models.User{
-			ID:     1,
-			Email:  "some@email.com",
-			Name:   "John",
-			Age:    25,
-			CityID: 1,
-		},
-		models.User{
-			ID:     2,
-			Email:  "some2@email.com",
-			Name:   "Eric",
-			Age:    17,
-			CityID: 2,
-		},
+	resp, err := h.s.GetUserList(0, 0)
+	if err != nil {
+		log.Println(err)
+		R.JSON500(w)
+		return
+	}
+
+	if len(resp) < 1 {
+		R.JSON404(w)
+		return
 	}
 
 	R.JSON200(w, resp)
