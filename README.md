@@ -6,6 +6,12 @@ Close the repo somewhere outside `GOPATH` and run:
 - `make install`
 - `make run`
 
+## DB Migrations
+Migrations run each time you run server, so you don't have care about that. However,
+if you need to run it manually:
+- `make migrate:up` - will trigger migrations
+- `make migrate:down` - will roll back all migrations (don't run it in production, the data will be lost)
+
 ## @todo
 - DB
  - several example tables
