@@ -5,23 +5,36 @@ import (
 	"net/http"
 
 	"github.com/dpogorelovsky/go-basic-web-app/app/handlers"
+	"github.com/dpogorelovsky/go-basic-web-app/app/storage/astorage"
 	"github.com/gorilla/mux"
 )
 
 // GetRouter - routes
-func GetRouter() *mux.Router {
+func GetRouter(db astorage.Storage) *mux.Router {
 	r := mux.NewRouter()
 
 	// commmon routes
 	r.HandleFunc("/", health)
 
 	// users routes
-	users := handlers.User{}
-	r.HandleFunc("/users", users.List)
+	users := handlers.User{
+		Storage: db,
+	}
+	r.HandleFunc("/users", users.Create).Methods("POST")
+	r.HandleFunc("/users", users.List).Methods("GET")
+	r.HandleFunc("/users/{id}", users.ID).Methods("GET")
+	r.HandleFunc("/users/{id}", users.Update).Methods("PUT")
+	r.HandleFunc("/users/{id}", users.Delete).Methods("DELETE")
 
 	// cities routes
-	cities := handlers.City{}
-	r.HandleFunc("/cities", cities.List)
+	cities := handlers.City{
+		Storage: db,
+	}
+	r.HandleFunc("/cities", cities.Create).Methods("POST")
+	r.HandleFunc("/cities", cities.List).Methods("GET")
+	r.HandleFunc("/cities/{id}", cities.ID).Methods("GET")
+	r.HandleFunc("/cities/{id}", cities.Update).Methods("PUT")
+	r.HandleFunc("/cities/{id}", cities.Delete).Methods("DELETE")
 
 	return r
 }

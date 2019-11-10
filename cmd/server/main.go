@@ -11,6 +11,7 @@ import (
 
 	"github.com/dpogorelovsky/go-basic-web-app/app/migration"
 	"github.com/dpogorelovsky/go-basic-web-app/app/router"
+	"github.com/dpogorelovsky/go-basic-web-app/app/storage/mysql"
 	"github.com/dpogorelovsky/go-basic-web-app/config"
 )
 
@@ -31,8 +32,18 @@ func main() {
 		config.Get("DB_NAME"),
 		"up")
 
+	// getting DB connection instance
+	db, err := mysql.NewStorage(config.Get("DB_HOST"),
+		config.Get("DB_USER"),
+		config.Get("DB_PASS"),
+		config.Get("DB_PORT"),
+		config.Get("DB_NAME"))
+
+	if err != nil {
+		log.Fatal(err)
+	}
 	// setup router
-	router := router.GetRouter()
+	router := router.GetRouter(db)
 
 	srv := &http.Server{
 		Addr: "0.0.0.0:" + config.Get("APP_PORT"),

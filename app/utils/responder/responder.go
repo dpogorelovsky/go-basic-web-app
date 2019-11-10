@@ -11,6 +11,11 @@ func JSON200(w http.ResponseWriter, data interface{}) {
 	renderJSON(w, http.StatusOK, data)
 }
 
+// JSON200OK - default OK message
+func JSON200OK(w http.ResponseWriter) {
+	renderJSON(w, http.StatusOK, map[string]string{"result": "ok"})
+}
+
 // JSON500 - responds with 500 error
 func JSON500(w http.ResponseWriter) {
 	data := map[string]string{"error": "internal server error"}
