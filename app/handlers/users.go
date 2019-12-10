@@ -21,7 +21,6 @@ type User struct {
 // List - returning list of users
 func (h *User) List(w http.ResponseWriter, r *http.Request) {
 	limit, offset := utils.GetPaginationParams(r.URL.Query())
-	// @todo add cities, cross entity user has city name in feed, check bes practices
 	resp, err := h.Storage.GetUserList(limit, offset)
 	if err != nil {
 		log.Println(err)
