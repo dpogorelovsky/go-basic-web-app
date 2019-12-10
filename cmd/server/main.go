@@ -9,6 +9,7 @@ import (
 	"os/signal"
 	"time"
 
+	"github.com/dpogorelovsky/go-basic-web-app/app/events"
 	"github.com/dpogorelovsky/go-basic-web-app/app/migration"
 	"github.com/dpogorelovsky/go-basic-web-app/app/router"
 	"github.com/dpogorelovsky/go-basic-web-app/app/storage/mysql"
@@ -42,6 +43,9 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	event := events.SetupEvents()
+	event.FireEvent(events.DBModelChanged, 45)
 	// setup router
 	router := router.GetRouter(db)
 
@@ -76,6 +80,9 @@ func main() {
 	// Doesn't block if no connections, but will otherwise wait
 	// until the timeout deadline.
 	srv.Shutdown(ctx)
+	time.Sleep(time.Second * 1)
+	event.Stop("Application stop")
+	time.Sleep(time.Second * 1)
 	// Optionally, you could run srv.Shutdown in a goroutine and block on
 	// <-ctx.Done() if your application should wait for other services
 	// to finalize based on context cancellation.

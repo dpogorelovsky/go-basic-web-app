@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/dpogorelovsky/go-basic-web-app/app/handlers"
+	"github.com/dpogorelovsky/go-basic-web-app/app/middlewares"
 	"github.com/dpogorelovsky/go-basic-web-app/app/storage/astorage"
 	"github.com/gorilla/mux"
 )
@@ -14,7 +15,7 @@ func GetRouter(db astorage.Storage) *mux.Router {
 	r := mux.NewRouter()
 
 	// commmon routes
-	r.HandleFunc("/", health)
+	r.Handle("/", middlewares.Cacheable(http.HandlerFunc(health), "bugaga"))
 
 	// users routes
 	users := handlers.User{
